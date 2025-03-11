@@ -6,6 +6,9 @@ base_name = "E20"
 pdf_path = f"{base_name}.pdf"  # Input PDF path
 output_pdf_path = f"{base_name}_with_annotation.pdf"  # Output PDF path
 
+# List of keywords to search for in the PDF
+keywords = {"word1", "word2"}
+
 # Tolerance for grouping words into the same column or row
 TOLERANCE = 15  # Adjust this value as needed
 panels = []
@@ -14,7 +17,7 @@ doc = fitz.open(pdf_path)
 for page_num, page in enumerate(doc):
     words = page.get_text("words")
     for word in words:
-        if word[4] in {"FTFC01b", "FTFC01a", "FTFC01c", "FTFC01d"}:
+        if word[4] in keywords:
             x0, y0, x1, y1 = word[0], word[1], word[2], word[3]
             panels.append({"text": word[4], "x0": x0, "y0": y0, "page": page_num})
 
